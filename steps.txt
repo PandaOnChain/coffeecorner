@@ -9,3 +9,6 @@ create models
 
 python manage.py makemigrations
 pythom manage.py migrate
+
+register models in the admin panel
+admin   | from .models import Category, Product ...
