@@ -5,3 +5,4 @@ cd coffeecorner
 django-admin startapp shop
 
 settings    | INSTALLED_APPS.append('shop.apps.ShopConfig')
+create models
