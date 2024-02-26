@@ -1,0 +1,7 @@
+venv, pip install django
+django-admin startproject coffeecorner
+
+cd coffeecorner
+django-admin startapp shop
+
+settings    | INSTALLED_APPS.append('shop.apps.ShopConfig')
