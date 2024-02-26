@@ -1,4 +1,4 @@
-venv, pip install django
+venv, pip install django pillow
 django-admin startproject coffeecorner
 
 cd coffeecorner
@@ -6,3 +6,6 @@ django-admin startapp shop
 
 settings    | INSTALLED_APPS.append('shop.apps.ShopConfig')
 create models
+
+python manage.py makemigrations
+pythom manage.py migrate
