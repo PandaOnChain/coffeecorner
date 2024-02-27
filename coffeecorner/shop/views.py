@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
 
+def zaglushka(request):
+    return render(request, 'slick/slick.html')
+
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()

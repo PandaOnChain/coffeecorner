@@ -100,3 +100,8 @@ sudo systemctl restart nginx
 
 #########NGINX LOGS
 tail -f /var/log/nginx/error.log
+
+
+.venv/Lib/site-packages/django/contrib/admin/sites.py
+site_title = gettext_lazy("CoffeCorner site admin")
+site_header = gettext_lazy("CoffeeCorner administration")
