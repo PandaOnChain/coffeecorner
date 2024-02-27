@@ -1,4 +1,4 @@
-venv, pip install django pillow
+venv, pip install django pillow python-dotenv
 django-admin startproject coffeecorner
 
 cd coffeecorner
@@ -12,3 +12,91 @@ pythom manage.py migrate
 
 register models in the admin panel
 admin   | from .models import Category, Product ...
+
+python manage.py createsuperuser
+
+
+
+sudo apt-get install iptables-persistent
+sudo iptables -I INPUT 5 -p tcp --dport 8000 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo netfilter-persistent save
+
+sudo apt install gunicorn
+gunicorn --bind 0.0.0.0:8000 coffeecorner.wsgi
+
+sudo mkdir /var/log/gunicorn
+sudo nano /etc/systemd/system/gunicorn.socket
+# ---------------------------------------------------------------------------
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+---------------------------------------------------------------------
+
+
+
+sudo nano /etc/systemd/system/gunicorn.service
+# ---------------------------------------------------------------------------
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/coco/coffeecorner/coffeecorner
+ExecStart=/home/ubuntu/coco/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn.sock coffeecorner.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+# ---------------------------------------------------------------------------
+
+# start the service
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+
+# check status
+sudo systemctl status gunicorn.socket
+sudo systemctl status gunicorn
+
+# restart if you change any python file
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+
+sudo apt-get install nginx
+sudo nano /etc/nginx/sites-available/coffeecorner
+
+server {
+    listen 80;
+    server_name 130.61.126.18;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/ubuntu/coco/coffeecorner/coffeecorner;
+    }
+    location /media/ {
+        root /home/ubuntu/coco/coffeecorner/coffeecorner;
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+
+sudo gpasswd -a www-data ubuntu
+sudo -u www-data stat /home/ubuntu/coco/coffeecorner/coffeecorner/static
+
+sudo ln -s /etc/nginx/sites-available/coffeecorner /etc/nginx/sites-enabled
+
+sudo nginx -t
+
+sudo iptables -I INPUT 5 -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo netfilter-persistent save
+sudo systemctl restart nginx
+
+#########NGINX LOGS
+tail -f /var/log/nginx/error.log
