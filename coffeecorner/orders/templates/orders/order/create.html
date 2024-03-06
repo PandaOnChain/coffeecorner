@@ -15,8 +15,14 @@
             <span>{{ item.total_price }}Kč</span>
         </li>
         {% endfor %}
+        {% if cart.coupon %}
+        <li>
+            "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+            <span class="neg">-{{ cart.get_discount|floatformat:2 }}Kč</span>
+        </li>
+        {% endif %}
     </ul>
-    <p>Total: {{ cart.get_total_price }}Kč</p>
+    <p>Total: {{ cart.get_total_price_after_discount|floatformat:2 }}Kč</p>
 </div>
 
 <form method="post" class="order-form">
