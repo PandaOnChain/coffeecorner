@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "shop.apps.ShopConfig",
     "cart.apps.CartConfig",
     "orders.apps.OrdersConfig",
-    'coupons.apps.CouponsConfig',
+    "coupons.apps.CouponsConfig",
 ]
 
 MIDDLEWARE = [
@@ -136,3 +136,7 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 CART_SESSION_ID = "cart"
+
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
+REDIS_DB = 1

@@ -105,3 +105,30 @@ tail -f /var/log/nginx/error.log
 .venv/Lib/site-packages/django/contrib/admin/sites.py
 site_title = gettext_lazy("CoffeCorner site admin")
 site_header = gettext_lazy("CoffeeCorner administration")
+
+install docker
+
+sudo apt install -y ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update -y
+                                                                        sudo apt install docker.io
+https://docs.docker.com/desktop/install/ubuntu/                         $ sudo apt-get purge containerd.io docker-ce
+sudo apt install ./docker-desktop-<version>-<arch>.deb                  $ rm -rf /var/lib/containerd
+systemctl --user start docker-desktop                                   [reboot]
+docker pull redis                                                       $ sudo apt-get install containerd.io docker-ce
+
+docker run -it --rm --name redis -p 6379:6379 redis     | docker run -d --rm --name redis -p 6379:6379 redis
+docker exec -it redis sh
+
+pip install redis
+
+
+>>> from shop.recommender import Recommender
+>>> r = Recommender()
+>>> r.products_bought([black_tea, red_tea])
+>>> r.products_bought([black_tea, green_tea])
+>>> r.products_bought([red_tea, black_tea, tea_powder])
+
+>>> r.suggest_products_for([black_tea])
