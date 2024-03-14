@@ -122,6 +122,7 @@ docker pull redis                                                       $ sudo a
 docker run -it --rm --name redis -p 6379:6379 redis     | docker run -d --rm --name redis -p 6379:6379 redis
 docker exec -it redis sh
 
+sudo apt-get install redis-server
 pip install redis
 
 
