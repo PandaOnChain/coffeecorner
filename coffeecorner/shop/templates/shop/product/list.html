@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
 <section class="page-section">
-    <div class="jumbotron bg-cover text-white" style="background: url('{% static "img/sunflower.svg" %}'); ">
+    <div class="jumbotron bg-cover text-white" style=" background: url('{% static "img/sunflower.svg" %}'); background-repeat: no-repeat; background-size: cover; background-position: center; ">
         <div class="container py-5 text-center">
             <h1 class="display-4 font-weight-bold" style="font-family: Urbanist;" >{% if category %}{{ category.name }}{% else %}All products
             {% endif %}</h1>
@@ -20,23 +20,71 @@
 <!-- <img src="{% static "img/sunflower.svg" %}" class="d-flex img-fluid" alt="..."> -->
 
 <div id="content">
-    <div class="container m-3">
-        <div class="row g-5">
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="row gx-5 me-5">
             <div class="col-md-3" style="font-family: Urbanist;" id="sidebar">
-                <nav class="nav flex-column">
-                    <h3 style="color:#2B50AA; font-family: Urbanist;">Kategorie</h3>
+                <nav class="nav flex-column mb-5">
+                    <h4 style="color:#2B50AA; font-family: Urbanist;">Kategorie</h4>
                     <a class="nav-link text-dark ps-0" {% if not category %}style="color:#FF9FE5 !important;"{% endif %} href="/shop">All</a>
                     {% for c in categories %}
                     <a class="nav-link text-dark ps-0" {% if category.slug == c.slug %}style="color:#FF9FE5 !important;"
                         {% endif %} href="{{ c.get_absolute_url }}">{{ c.name }}</a>
                     {% endfor %}
-                </nav>  
+                </nav>              
+                    
+
+                <h4 style="color:#2B50AA; font-family: Urbanist;">Cenový filtr</h4>
+                <div id="price-range" style="margin-bottom: 20px; margin-top: 15px;"></div>
+                Cena <span id="price-range-value"></span>
+                
+
+                <h4 class="mt-5" style="font-family: Urbanist;">Úroveň kofeinu</h4>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        None (2)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Very low (3)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Low (5)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Moderate (0)
+                    </label>
+                </div>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Robust (11)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        High (7)
+                    </label>
+                </div>
+                
+
+    
             </div>
 
 
 
         <div id="main" class="product-list col-md-9 pt-sm-5">
-            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselExampleAutoplaying" class="carousel slide ps-2 pe-2" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                     <img src="{% static "img/sunflower.svg" %}" class="d-block w-100" alt="...">
@@ -54,13 +102,13 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-                    <div class="container">
+                    <div class="container ps-0 pe-0">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-2">
                         {% for product in products %}
                         <div class="col">
                         <div class="card mb-3 p-2 border-light ">
                             <a href="{{ product.get_absolute_url }}">
-                                <img class="img-fluid" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                                <img class="img-fluid" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" style="width: 100%;">
                             </a>
                             <div class="card-body  ps-1">
                                 <div class="mb-2" style="color: #ffd4d4;">
@@ -99,4 +147,38 @@
         </div>
     </div>
 </div>
+
+<script>
+    const rangeInput = document.getElementById('priceRange');
+    const endPrice = document.getElementById('endPrice');
+
+    rangeInput.addEventListener('input', function() {
+        endPrice.textContent = this.value;
+    });
+</script>
+
+<script>
+    var priceRange = document.getElementById('price-range');
+
+    noUiSlider.create(priceRange, {
+        start: [50, 550],
+        connect: true,
+        range: {
+            'min': 50,
+            'max': 1000
+        },
+        format: {
+            to: function (value) {
+                return value.toFixed() + 'Kč';
+            },
+            from: function (value) {
+                return value.replace('Kč', '');
+            }
+        }
+    });
+
+    priceRange.noUiSlider.on('update', function (values, handle) {
+        document.getElementById('price-range-value').innerHTML = values.join(' - ');
+    });
+</script>
 {% endblock %}
