@@ -6,72 +6,135 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Your shopping cart</h1>
-     <table class="cart">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Remove</th>
-                <th>Unit price</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for item in cart %}
-        {% with product=item.product %}
-            <tr>
-                <td>
+
+<section class="page-section">
+    <div class="jumbotron bg-cover text-white" style=" background: url('{% static "img/cart.jpg" %}'); background-repeat: no-repeat; background-size: cover; background-position: center; ">
+        <div class="container py-5 text-center">
+            <h1 class="display-4 font-weight-bold" style="font-family: Urbanist;">Košík</h1>
+            <p class="font-italic mb-0" style="font-family: Urbanist;">
+                <a href="/" class="text-white" >Home</a> / <a href="/shop" class="text-white">Shop</a> / Checkout
+            </p>
+        </div>
+    </div>
+</section>
+
+<div id="content">
+    <div class="container d-flex justify-content-center align-content-center">
+
+
+        <table class="table mt-lg-5" style="font-family: Urbanist;">
+            <thead>
+                <tr>
+                <th scope="col"></th>
+                <th scope="col" colspan="6">Product</th>
+                <th scope="col" class="justify-content-center align-content-center text-center">Cena</th>
+                <th scope="col" class="justify-content-center align-content-center text-center">Množství</th>
+                <th scope="col" class="justify-content-center align-content-center text-center">Mezisoučet</th>                
+                
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for item in cart %}
+                {% with product=item.product %}
+                <tr>
+                <th scope="row" class="justify-content-center align-content-center">
+                    <span class="">
+                    <form action="{% url "cart:cart_remove" product.id %}" method="post">
+                        <button class="btn" type="submit" value="remove" >
+                            <svg xmlns="http://www.w3.org/2000/svg" style="color: #ffd4d4;" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                        </button>
+                    {% csrf_token %}
+                    </form></span></th>
+                <td colspan="6">
                     <a href="{{ product.get_absolute_url }}">
-                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" height="68px" width="49px"></a>
+                    <span class="ms-3">
+                    <a href="{{ product.get_absolute_url }}" style="color: #2B50AA; font-family: Urbanist;">{{ product.name }}</span>
                     </a>
                 </td>
-                <td>{{ product.name }}</td>
-                <td><form action="{% url "cart:cart_add" product.id %}" method="post">
-                        {{ item.update_quantity_form.quantity }}
-                        {{ item.update_quantity_form.override }}
-                        <input type="submit" value="Update">
-                        {% csrf_token %}
-                    </form>
+                <td class="justify-content-center align-content-center text-center"><span>{{ item.price }}Kč</span></td>
+                <td class="justify-content-center align-content-center text-center">
+                    <div class="input-group justify-content-center">
+                    <button class="btn border-top border-start border-bottom" style="border-radius: 0%; color: #2B50AA;" id="decrementButton" type="button">-</button>
+                    <input class="form-control border-0 text-center border-top border-bottom" id="id_quantity" name="quantity" type="num" value="{{ item.quantity }}" style="max-width: 3rem; color: #2B50AA; font-size: small;">
+                    <button class="btn border-top border-end border-bottom" style="border-radius: 0%; color: #2B50AA;" id="incrementButton" type="button">+</button>
+                    </div></td>
+                <td class="justify-content-center align-content-center text-center"><span>{{ item.total_price }}Kč</span></td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+
+                {% if cart.coupon %}
+                <tr>
+                <th scope="row" class="justify-content-center align-content-center">
+                    <span class="">
+                   </span></th>
+                <td colspan="6">
+                    <span style="color: #2B50AA;">"{{ cart.coupon.code }}" coupon
+                        ({{ cart.coupon.discount }}% off)</span>
                 </td>
-                <td>
-                    <form action="{% url "cart:cart_remove" product.id %}"
-                    method="post">
-                    <input type="submit" value="Remove">
-                    {% csrf_token %}
-                    </form>
-                </td>
-                <td class="num">{{ item.price }}Kč</td>
-                <td class="num">{{ item.total_price }}Kč</td>
-            </tr>
-        {% endwith %}
-        {% endfor %}
+                <td class="justify-content-center align-content-center text-center"><span></span></td>
+                <td class="justify-content-center align-content-center text-center">/td>
+                <td class="justify-content-center align-content-center text-center"><span style="color: #ffd4d4; font-weight: 400;">–{{ cart.get_discount|floatformat:2 }}Kč</span></td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        </div>
+
+        <div class="row g-5 pt-5" style="font-family: Urbanist;">
+            <div class="col-md-5 col-lg-4">
+                <div class="container d-flex align-content-center">
+                    <div class="input-group">
+                        <form action="{% url "coupons:apply" %}" method="post" class="d-flex">
+                            <input class="form-control" style="border-radius: 1px; font-family: Urbanist;" type="text" name="code" required="" id="id_code" placeholder="Kód kupónu">
+                            <button class="btn " style="background-color: #2B50AA; border-radius: 1px; font-family: Urbanist; color: white; font-size: small;" type="submit"  value="Apply">
+                                POUŽÍT KUPÓN
+                            </button>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+    <div class="row g-5 pt-5" style="font-family: Urbanist;">
+      <div class="col-md-6 col-lg-6 align-content-end">
+        <div class="p-4 sm" style="font-family: Urbanist;">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-dark" style="font-family: Urbanist; font-weight: 500;">Součet</span>
+            </h4>
+            <div class="row">
+                <div class="col-4 text-sm-start">
+                <h8 class="my-0" style="font-family: Urbanist; font-weight: 500;">Mezisoučet</h8>
+                </div>
+                <div class="col-8">
+                <small class="text-body-secondary">{{ cart.get_total_price_after_discount|floatformat:2 }}Kč</small>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-4 text-sm-start">
+                <h8 class="my-0" style="font-family: Urbanist; font-weight: 500;">Doprava</h8>
+                </div>
+                <div class="col-8">
+                <p><small class="text-body-secondary">Pro zobrazení možností zadejte svou adresu </small></p>
+                <p><small class="text-body-secondary">Výpočet dopravy</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
         
-        {% if cart.coupon %}
-        <tr class="subtotal">
-            <td>Subtotal</td>
-            <td colspan="4"></td>
-            <td class="num">{{ cart.get_total_price }}Kč</td>
-        </tr>
-         <tr>
-            <td>
-                "{{ cart.coupon.code }}" coupon
-                ({{ cart.coupon.discount }}% off)
-            </td>
-            <td colspan="4"></td>
-            <td class="num neg">
-            –{{ cart.get_discount|floatformat:2 }}Kč
-            </td>
-        </tr>
-        {% endif %}
-        <tr class="total">
-            <td>Total</td>
-            <td colspan="4"></td>
-            <td class="num">{{ cart.get_total_price_after_discount|floatformat:2 }}Kč</td>
-        </tr>
-        </tbody>
-    </table>
+
+
+
+
+
     {% if recommended_products %}
     <div class="recommendations cart">
         <h3>People who bought this also bought</h3>
@@ -85,14 +148,28 @@
         {% endfor %}
     </div>
     {% endif %}
-    <p>Apply a coupon</p>
-    <form action="{% url "coupons:apply" %}" method="post">
-        {{ coupon_apply_form }}
-        <input type="submit" value="Apply">
-        {% csrf_token %}
-    </form>
+   
     <p class="text-right">
     <a href="{% url "shop:product_list" %}" class="button light">Continue shopping</a>
     <a href="{% url "orders:order_create" %}" class="button">Checkout</a>
     </p>
+
+
+<script>
+    $(document).ready(function() {
+    let currentValue = parseInt($('#id_quantity').val());;
+
+    $('#incrementButton').click(function() {
+        currentValue++;
+        $('#id_quantity').val(currentValue);
+    });
+
+    $('#decrementButton').click(function() {
+       if (currentValue > 1) {
+            currentValue--;
+            $('#id_quantity').val(currentValue);
+        }
+    });
+});
+</script> 
 {% endblock %}

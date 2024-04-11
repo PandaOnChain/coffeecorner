@@ -51,6 +51,23 @@
                 background-color: black;
                 border: 0;
             }
+/* 
+            .card:hover {
+                color: #9cc4b266;
+                transform: scale(1.025);
+                box-shadow: #9cc4b266 0px 5px 10px
+            }
+
+            .card:hover .backgroundEffect {
+                bottom: 0;
+                height: 320px;
+                width: 100%;
+                position: absolute;
+                z-index: -1;
+                background-color: #1b9ce3;
+                animation: popBackground 0.3s ease-in
+            } */
+
 
         </style>
 
@@ -58,7 +75,7 @@
     <body>
        
         <header class="d-flex text-white justify-content-center" style="font-family: Urbanist; font-size: small; background: #2B50AA;">Získejte slevu 10 % na každou objednávku | Použijte kód: LETO10</header>
-         <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 shadow-sm">
+         <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 shadow-sm sticky-top bg-white">
           <div class="col-md-3 ms-5 mb-md-0">
                 <a href="/shop" class="d-inline-flex link-body-emphasis text-decoration-none">
                 <img src="{% static "img/mlogo.png" %}" alt="Logo" style="width:83px;height:93px;">
@@ -66,11 +83,11 @@
             </div>
 
             <ul class="nav justify-content-center" style="font-family: Urbanist;">
-                <li><a href="#" class="nav-link text-dark">HOME</a></li>
+                <li><a href="#" class="nav-link text-dark"><b>HOME</b></a></li>
                 <li><a href="#" class="nav-link text-dark"><b>O NÁS</b></a></li>
                 <li><a href="/shop" class="nav-link text-dark fw-bolder" style="color:#FF9FE5 !important;">SHOP</a></li>
                 <li><a href="#" class="nav-link text-dark fw-bolder">BLOG</a></li>
-                <li><a href="#" class="nav-link text-dark">KONTAKT</a></li>
+                <li><a href="#" class="nav-link text-dark"><b>KONTAKT</a></b></li>
             </ul>
 
             <div class="col-md-3 me-5 nav justify-content-end ">
@@ -167,11 +184,11 @@
                 </div>
                 <div class="col-4 p-2">
                     <form>
-                    <img class="rounded mx-auto d-block" width="130" height="147" src="{% static "img/mlogo.png" %}" alt="logo">
+                    <img class="rounded mx-auto d-block mb-3" width="112" height="126" src="{% static "img/mlogo.png" %}" alt="logo">
                     <h4 style="font-family: Urbanist; opacity: 80%;">Připojte se k našemu newsletteru a získejte 20 % na první objednávku</h4>
                     <div class="d-flex flex-column flex-sm-row w-100 gap-2 border-bottom">
                         <label style="font-family: Urbanist;" for="newsletter1" class="visually-hidden">Email address</label>
-                        <input type="text" class="form-control border-light" style="text-align: start;" placeholder="Zadejte svůj e-mail">
+                        <input type="text" class="form-control border-light mt-2" style="text-align: start;" placeholder="Zadejte svůj e-mail">
                         <button type="button" class="btn">
                         <img src="{% static "svg/message.svg" %}" alt="Search_light">
                         </button>
