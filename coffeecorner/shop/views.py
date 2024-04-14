@@ -6,6 +6,11 @@ from .models import Category, Product
 def zaglushka(request):
     return render(request, 'slick/slick.html')
 
+
+def home_page(request):
+    return render(request, "home/home.html")
+
+
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
