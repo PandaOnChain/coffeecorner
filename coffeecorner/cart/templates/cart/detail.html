@@ -133,8 +133,6 @@
 
 
 
-
-
     {% if recommended_products %}
     <div class="recommendations cart">
         <h3>People who bought this also bought</h3>
@@ -153,6 +151,15 @@
     <a href="{% url "shop:product_list" %}" class="button light">Continue shopping</a>
     <a href="{% url "orders:order_create" %}" class="button">Checkout</a>
     </p>
+</div>
+
+    <section class="mt-5 pb-5  ms-5 me-5">
+        <div class="container-fluid px-0">
+            <div class="row  gx-4 gx-lg-5">
+            <img class="w-100" src="{% static "img/newsletter.webp" %}" alt="doporuceno">
+            </div>
+        </div>
+    </section>
 
 
 <script>

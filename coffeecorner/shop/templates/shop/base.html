@@ -85,7 +85,7 @@
             <!-- <button class="navbar-toggler navbar-toggler-right btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> -->
             <!-- <div class="collapse navbar-collapse" id="navbarResponsive"> -->
                 <ul class="nav justify-content-center" style="font-family: Urbanist;">
-                    <li><a href="#" class="nav-link text-dark"><b>HOME</b></a></li>
+                    <li><a href="/home" class="nav-link text-dark"><b>HOME</b></a></li>
                     <li><a href="#" class="nav-link text-dark"><b>O NÁS</b></a></li>
                     <li><a href="/shop" class="nav-link text-dark fw-bolder" style="color:#FF9FE5 !important;">SHOP</a></li>
                     <li><a href="#" class="nav-link text-dark fw-bolder">BLOG</a></li>
@@ -114,7 +114,7 @@
                     </li>
                     <li class="nav-item col-4 col-lg-auto">
                         {% with total_items=cart|length %}
-                        <button type="button" class="btn position-relative" id="BagToastBtn">
+                        <button type="button" class="btn position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
                         <img src="{% static "svg/bag-alt-light.svg" %}" alt="Bag_alt_light">
                         <span class="position-absolute start-75 translate-middle badge rounded-pill mt-sm-2" style="background-color: #FF9FE5; color:#2B50AA">{% if total_items > 0 %}{{ total_items }}{% elif not order %}0{% endif %}{% endwith %}</span>
                         </button>
@@ -123,6 +123,21 @@
                 </ul>
             </div>
             </nav>
+            
+            <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    {% with total_items=cart|length %}
+                    <h5 class="offcanvas-title" style="color:#2B50AA" id="offcanvasWithBothOptionsLabel">Váš košík ({% if total_items > 0 %}{{ total_items }}{% elif not order %}0{% endif %}){% endwith %}</h5>
+                    <!-- <p>Doprava zdarma na všechny objednávky nad 500 Kč</p> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>Try scrolling the rest of the page to see this option in action.</p>
+                    <hr class="my-3">
+                    <div class="row mb-3 justify-content-center"><a href="/orders/create" class="w-75 btn btn-md" style="border-radius: 1px; background-color: #FF9FE5; color:white" type="submit"  value="Place order">Checkout</a></div>
+                    <div class="row mb-3 justify-content-center"><a href="/cart">Zobrazit košík</a></div>
+                </div>
+            </div>
        
         
         {% block content %}
@@ -148,7 +163,7 @@
                 <div class="row">
                 <div class="col-6 col-md-2 mb-3">
                     <h5 class="bolder" style="font-family: Urbanist; color:#2B50AA;  font-size: medium; font-weight: 500;">PODNIK</h5>
-                    <ul class="nav flex-column" style="font-family: Urbanist; font-size: smaller;">
+                    <ul class="nav flex-column mt-4" style="font-family: Urbanist; font-size: smaller;">
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="bude jednou fungovat">O nás</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="bude jednou fungovat">Obchodní podmínky</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="bude jednou fungovat">Káva do kanceláře</a></li>
@@ -160,7 +175,7 @@
 
                 <div class="col-6 col-md-2 mb-3">
                     <h5 style="font-family: Urbanist; color:#2B50AA; font-size: medium; font-weight: 500;">OBJEDNÁVKY</h5>
-                    <ul class="nav flex-column" style="font-family: Urbanist; font-size: smaller;">
+                    <ul class="nav flex-column mt-4" style="font-family: Urbanist; font-size: smaller;">
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Podpora</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Doprava a platba</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Časté dotazy</a></li>
@@ -172,7 +187,7 @@
 
                 <div class="col-6 col-md-2 mb-3">
                     <h5 style="font-family: Urbanist; color:#2B50AA;  font-size: medium; font-weight: 500;">ÚČET</h5>
-                    <ul class="nav flex-column" style="font-family: Urbanist; font-size: smaller;">
+                    <ul class="nav flex-column mt-4" style="font-family: Urbanist; font-size: smaller;">
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Můj účet</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Moje objednávky</a></li>
                     <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Návraty</a></li>

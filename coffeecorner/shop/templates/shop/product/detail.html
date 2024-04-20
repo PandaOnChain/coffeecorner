@@ -6,9 +6,12 @@
 
 {% block content %}
 
-    <section class="py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="row gx-4 gx-lg-5">
+    <section style="background-color: #fff;">
+            <div class="container px-4 px-lg-5 my-4">
+            <div class="mb-4" style="font-family: Urbanist; font-size: small;">
+                <p>Home / Shop / <b>{{ product.name }}</b></p>
+            </div>
+                <div class="row gx-4 gx-lg-5 mb-5">
                     <div class="col-md-6">
                         <img class="card-img-top mb-5 mb-md-0" width="634" height="773" src="{% if product.image %}{{ product.image.url }}{% else %} {% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }}" alt="..."></div>
                     <div class="col-md-6">
@@ -31,86 +34,103 @@
                             </svg>
                             <span class="p-2 text-dark-emphasis" style="font-family: Urbanist;">(10 hodnocení zákazníků)</span>
                         </div>
-                        <div class="fs-5 mb-5">
+                        <div class="fs-5 mb-2">
                             <span class="text-decoration-line-through">{{ product.price }}Kč</span>
                             <span>{{ product.price }}Kč</span>
                         </div>
-                        
+                        <hr class="my-4">
                         <p class="lead" style="font-family: Urbanist; color:#2B50AA;">Dodání zdarma při objednávce nad 500 Kč</p>
                         <p class="lead">{{ product.description|linebreaks }}</p>
-                        <div class="d-flex">
+                        <hr class="my-4">
+                        <div class="d-flex w-100">
+                        
+                            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                    
+                                <div class="input-group">
+                                    <button class="btn border-top border-start border-bottom" style="border-radius: 0%;" id="decrementButton" type="button">-</button>
+                                    <input class="form-control border-0 text-center border-top border-bottom" id="id_quantity" name="quantity" type="num" value="1" style="max-width: 3rem">
+                                    <button class="btn border-top border-end border-bottom" style="border-radius: 0%;" id="incrementButton" type="button">+</button>
+                                    
                             
-                                <form action="{% url "cart:cart_add" product.id %}" method="post">
-                                     
-                                    <div class="input-group">
-                                        <button class="btn border-top border-start border-bottom" style="border-radius: 0%;" id="decrementButton" type="button">-</button>
-                                        <input class="form-control border-0 text-center border-top border-bottom" id="id_quantity" name="quantity" type="num" value="1" style="max-width: 3rem">
-                                        <button class="btn border-top border-end border-bottom" style="border-radius: 0%;" id="incrementButton" type="button">+</button>
-                                        
-                               
-                                       <input type="hidden" name="override" value="False" id="id_override">
-                                    <button class="ms-lg-3  flex-shrink-0 border-0 " style="background-color: #2B50AA; font-family: Urbanist; color: white;" type="submit">
-                                        Do košíku
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5"/>
-                                        </svg>
-                                    </button>
-                                    {% csrf_token %}
-                                </form>
-                            </div>
+                                    <input type="hidden" name="override" value="False" id="id_override">
+                                  
+                                <button class="ms-lg-3  flex-shrink-0 border-0 " style="background-color: #2B50AA; font-family: Urbanist; color: white;" type="submit">
+                                    Do košíku
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
+                                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5"/>
+                                    </svg>
+                                </button>
+                                </div>
+                                {% csrf_token %}
+                            </form>
                         </div>
-                        <p class="lead pt-lg-3" style="font-family: Urbanist; font-size: small;"> <b>Kategorie: </b><a href="{{ product.category.get_absolute_url }}">
+                        <div class="mt-3">
+                                <button id="heartButton" class="btn rounded-5" style="background-color: #ffd4d4; color: #2B50AA;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                        <path id="heartIcon" d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                    </svg>
+                                </button>
+                            <span style="color: #2B50AA; font-family: Urbanist; font-size: small; font-weight: 400;">Přidat do wishlistu</span>
+                        </div>
+                        <div>
+                            <p class="lead pt-lg-3" style="font-family: Urbanist; font-size: small;"> <b>Kategorie: </b><a href="{{ product.category.get_absolute_url }}">
                             {{ product.category }}</a></p>
+                        </div>
+
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </section>
 
-    <section class="page-section" style="background-color: #ffd4d4;">
-            <div class="container px-4 px-lg-5">
-            {% if recommended_products %}
-            <div class="recommendations">
-                <h3>People who bought this also bought</h3>
-                {% for p in recommended_products %}
-                <div class="col">
-                <div class="card mb-3 p-2 border-light ">
-                    <a href="{{ product.get_absolute_url }}">
-                        <img class="img-fluid" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                    </a>
-                    <div class="card-body  ps-1">
-                        <div class="mb-2" style="color: #ffd4d4;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-half" viewBox="0 0 16 16">
-                                 <path d="M5.354 5.119 7.538.792A.52.52 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.54.54 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.6.6 0 0 1 .085-.302.51.51 0 0 1 .37-.245zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.56.56 0 0 1 .162-.505l2.907-2.77-4.052-.576a.53.53 0 0 1-.393-.288L8.001 2.223 8 2.226z"/>
-                            </svg>
-                            <span class="p-2 text-dark-emphasis" style="font-family: Urbanist;">(10 hodnocení zákazníků)</span>
-                        </div>
-                        <h5 class="card-title"  ><a style="color:#2B50AA; font-family: Urbanist; font-weight: bold; opacity: 90%;" href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
-                        <div style="font-family: Urbanist;" class="d-flex justify-content-between"><span>{{ product.price }}Kč </span>
-                            <button class="flex-shrink-0 border-0 pe-0" style="background-color: white; font-family: Urbanist;" type="submit">
-                                        Do košíku
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-handbag" viewBox="0 0 16 16" style="color: #2B50AA;">
-                                        <path d="M8 1a2 2 0 0 1 2 2v2H6V3a2 2 0 0 1 2-2m3 4V3a3 3 0 1 0-6 0v2H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5zm-1 1v1.5a.5.5 0 0 0 1 0V6h1.639a.5.5 0 0 1 .494.426l1.028 6.851A1.5 1.5 0 0 1 12.678 15H3.322a1.5 1.5 0 0 1-1.483-1.723l1.028-6.851A.5.5 0 0 1 3.36 6H5v1.5a.5.5 0 1 0 1 0V6z"/>
-                                        </svg>
-                            </button></div>
+    <section class="pt-3 pb-4 mb-lg-5" style="background-color: #ffd4d4;">
+    <div class="container px-4 px-lg-5">
+        {% if recommended_products %}
+        <div class="pb-3">
+            <h3 class="mt-4 mb-2" style="font-family: Urbanist; color:#2B50AA; font-weight: 100;">Doporučeno přímo pro vás</h3>
+        </div>
+        <div class="row">
+            {% for p in recommended_products %}
+            <div class="col-lg-3 col-md-6">
+                <div class="card mb-3 p-2 border-0" style="background-color: #ffd4d4;">
+                <a href="{{ p.get_absolute_url }}">
+                    <img class="img-fluid" src="{% if p.image %}{{ p.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <div class="card-body  ps-1">
+                    <div class="mb-2" style="color:rgba(255, 159, 229, 1)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-half" viewBox="0 0 16 16">
+                            <path d="M5.354 5.119 7.538.792A.52.52 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.54.54 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.6.6 0 0 1 .085-.302.51.51 0 0 1 .37-.245zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.56.56 0 0 1 .162-.505l2.907-2.77-4.052-.576a.53.53 0 0 1-.393-.288L8.001 2.223 8 2.226z"/>
+                        </svg>
+                        <span class="p-2 text-dark-emphasis" style="font-family: Urbanist;">(10 hodnocení zákazníků)</span>
                     </div>
-                    </div>
+                    <h5 class="card-title"  ><a style="color:#2B50AA; font-family: Urbanist; font-weight: bold; opacity: 90%;" href="{{ product.get_absolute_url }}">{{ p.name }}</a></h5>
+                    <div style="font-family: Urbanist;" class="d-flex justify-content-between"><span>{{ p.price }}Kč </span>
+                        <button class="flex-shrink-0 border-0 pe-0" style="background-color: #ffd4d4; font-family: Urbanist;" type="submit">
+                                    Do košíku
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-handbag" viewBox="0 0 16 16" style="color: #2B50AA;">
+                                    <path d="M8 1a2 2 0 0 1 2 2v2H6V3a2 2 0 0 1 2-2m3 4V3a3 3 0 1 0-6 0v2H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5zm-1 1v1.5a.5.5 0 0 0 1 0V6h1.639a.5.5 0 0 1 .494.426l1.028 6.851A1.5 1.5 0 0 1 12.678 15H3.322a1.5 1.5 0 0 1-1.483-1.723l1.028-6.851A.5.5 0 0 1 3.36 6H5v1.5a.5.5 0 1 0 1 0V6z"/>
+                                    </svg>
+                        </button></div>
                 </div>
-                {% endfor %}
+                </div>
             </div>
-            {% endif %}
-            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        </div>
     </section>
    
 <script>
@@ -130,4 +150,22 @@
     });
 });
 </script>       
+
+<script>
+    var heartButton = document.getElementById('heartButton');
+    var heartIcon = document.getElementById('heartIcon');
+    var icons = [
+        'm8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15', 
+        'M8 2.748v11.047c3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15',
+        'M8.931.586 7 3l1.5 4-2 3L8 15C22.534 5.396 13.757-2.21 8.931.586M7.358.77 5.5 3 7 7l-1.5 3 1.815 4.537C-6.533 4.96 2.685-2.467 7.358.77',
+        'M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'
+    ];
+    var index = 0;
+
+    heartButton.addEventListener('click', function() {
+        index = (index + 1) % icons.length; // переключиться на следующую иконку
+        heartIcon.setAttribute('d', icons[index]); // обновить иконку
+    });
+</script>
+
 {% endblock %}
