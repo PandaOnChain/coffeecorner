@@ -5,7 +5,6 @@ class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     image_list = models.ImageField(upload_to="categories/lists", blank=True)
-    image_description = models.ImageField(upload_to="categories/descriptions", blank=True)
 
     class Meta:
         ordering = ['name']
@@ -34,6 +33,9 @@ class Product(models.Model):
     rating = models.IntegerField()
     pre_discount_price = models.DecimalField(max_digits=10, decimal_places=2)
     short_description = models.TextField(blank=True)
+    image_description = models.ImageField(
+        upload_to="products/descriptions/%Y/%m/%d", blank=True
+    )
     class Meta:
         ordering = ['-updated']
         indexes = [models.Index(fields=['id', 'slug']),

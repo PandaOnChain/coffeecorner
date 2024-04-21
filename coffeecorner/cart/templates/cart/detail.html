@@ -1,6 +1,6 @@
 {% extends "shop/base.html" %}
 {% load static %}
-
+{% load extras %}
 {% block title %}
     Your shopping cart 
 {% endblock %}
@@ -132,20 +132,57 @@
         
 
 
-
-    {% if recommended_products %}
-    <div class="recommendations cart">
-        <h3>People who bought this also bought</h3>
-        {% for p in recommended_products %}
-        <div class="item">
-            <a href="{{ p.get_absolute_url }}">
-                    <img src="{% if p.image %} {{ p.image.url }} {% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }}">
-                </a>
-                <p><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></p>
+<section class="pt-3 pb-4 mb-lg-5" style="background-color: #ffd4d4;">
+    <div class="container px-4 px-lg-5">
+        {% if recommended_products %}
+        <div class="pb-3">
+            <h3 class="mt-4 mb-2" style="font-family: Urbanist; color:#2B50AA; font-weight: 100;">Doporučeno přímo pro vás</h3>
         </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+        <div class="row">
+            {% for p in recommended_products %}
+            <div class="col-lg-3 col-md-6">
+                <div class="card mb-3 p-2 border-0" style="background-color: #ffd4d4;">
+                <a href="{{ p.get_absolute_url }}">
+                    <img class="img-fluid" src="{% if p.image %}{{ p.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <div class="card-body  ps-1">
+                    <div class="mb-2" style="color:rgba(255, 159, 229, 1)">
+                        {% if product.rating %}
+                                {% for i in product.rating|range_filter %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                </svg>
+                                {% endfor %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-half" viewBox="0 0 16 16">
+                                    <path d="M5.354 5.119 7.538.792A.52.52 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.54.54 0 0 1 16 6.32a.55.55 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.6.6 0 0 1 .085-.302.51.51 0 0 1 .37-.245zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.56.56 0 0 1 .162-.505l2.907-2.77-4.052-.576a.53.53 0 0 1-.393-.288L8.001 2.223 8 2.226z"/>
+                                </svg>
+                                {% if product.rating|empty_stars %}
+                                    {% for i in product.rating|remain_stars %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                                        </svg>
+                                    {% endfor %}
+                                {% endif %}
+                                    
+                            {% endif %}
+                        <span class="p-2 text-dark-emphasis" style="font-family: Urbanist;">(10 hodnocení zákazníků)</span>
+                    </div>
+                    <h5 class="card-title"  ><a style="color:#2B50AA; font-family: Urbanist; font-weight: bold; opacity: 90%;" href="{{ product.get_absolute_url }}">{{ p.name }}</a></h5>
+                    <div style="font-family: Urbanist;" class="d-flex justify-content-between"><span>{{ p.price }}Kč </span>
+                        <button class="flex-shrink-0 border-0 pe-0" style="background-color: #ffd4d4; font-family: Urbanist;" type="submit">
+                                    Do košíku
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-handbag" viewBox="0 0 16 16" style="color: #2B50AA;">
+                                    <path d="M8 1a2 2 0 0 1 2 2v2H6V3a2 2 0 0 1 2-2m3 4V3a3 3 0 1 0-6 0v2H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5zm-1 1v1.5a.5.5 0 0 0 1 0V6h1.639a.5.5 0 0 1 .494.426l1.028 6.851A1.5 1.5 0 0 1 12.678 15H3.322a1.5 1.5 0 0 1-1.483-1.723l1.028-6.851A.5.5 0 0 1 3.36 6H5v1.5a.5.5 0 1 0 1 0V6z"/>
+                                    </svg>
+                        </button></div>
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        </div>
+    </section>
    
     <p class="text-right">
     <a href="{% url "shop:product_list" %}" class="button light">Continue shopping</a>

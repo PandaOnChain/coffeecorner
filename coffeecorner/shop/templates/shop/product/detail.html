@@ -88,6 +88,29 @@
             </div>
         </section>
 
+        <section class="page-section pt-4 pb-4" style="background-color: #ffd4d4;">
+            <div class="container px-4 px-lg-5">
+                <div class="row p-3"> 
+                    <div class="col-md-6 text-end">
+                        <h5 class="mt-0 pe-5" style="color: #2B50AA; font-family: Urbanist;">Popis</h5>
+                    </div>
+                    <div class="col-md-6 text-start">
+                        <h5 class="mt-0" style="font-family: Urbanist;">Doprava a vrácení zboží</h5>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-md-7 pe-5" style="font-family: Urbanist; font-size: small;">
+                        <p >{{ product.description|safe|linebreaks }}</p>
+                    </div>
+                    <div class="col-md-5 ps-3 pt-3">
+                        <img src="{% if product.image_description %}{{ product.image_description.url }}{% else %} {% static "img/no_image.png" %}{% endif %}" alt="Chocolate" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
     <section class="pt-3 pb-4 mb-lg-5" style="background-color: #ffd4d4;">
     <div class="container px-4 px-lg-5">
         {% if recommended_products %}
