@@ -52,7 +52,7 @@
                 background-color: black;
                 border: 0;
             }
-/* 
+/*        
             .card:hover {
                 color: #9cc4b266;
                 transform: scale(1.025);
@@ -124,18 +124,56 @@
             </div>
             </nav>
             
-            <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas offcanvas-end" style="width: 333px;" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
                 <div class="offcanvas-header">
-                    {% with total_items=cart|length %}
-                    <h5 class="offcanvas-title" style="color:#2B50AA" id="offcanvasWithBothOptionsLabel">Váš košík ({% if total_items > 0 %}{{ total_items }}{% elif not order %}0{% endif %}){% endwith %}</h5>
-                    <!-- <p>Doprava zdarma na všechny objednávky nad 500 Kč</p> -->
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <button type="button" class="btn-close mt-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <p>Try scrolling the rest of the page to see this option in action.</p>
+                    {% with total_items=cart|length %}
+                    <div class="container mt-0" style="font-family: Urbanist; ">
+                    <h5 style="color:#2B50AA">VÁŠ KOŠÍK ({% if total_items > 0 %}{{ total_items }}{% elif not order %}0{% endif %}){% endwith %}</h5>
+                    <p class="lead" style="font-size: small;">Doprava zdarma na všechny objednávky nad 500 Kč</p>
+                    <hr>
+                    {% for item in cart %}
+                        {% with product=item.product %}
+                            <div class="row align-items-center mb-3">
+                                <div class="col-md-3">
+                                    <a href="{{ product.get_absolute_url }}">
+                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }}" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="col-md-7 mt-2">
+                                    <span class="">
+                                        <a href="{{ product.get_absolute_url }}" style="color: #2B50AA; font-family: Urbanist;">{{ product.name }}</a>
+                                    </span>
+                                    <span class="">
+                                        <p style="font-size: small;">{{ item.quantity }} x {{ product.price }} Kč</p>
+                                    </span>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <button class="btn" type="submit" value="remove" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="color: #ffd4d4;" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                        {% endwith %}
+                    {% endfor %}
+                    
                     <hr class="my-3">
-                    <div class="row mb-3 justify-content-center"><a href="/orders/create" class="w-75 btn btn-md" style="border-radius: 1px; background-color: #FF9FE5; color:white" type="submit"  value="Place order">Checkout</a></div>
-                    <div class="row mb-3 justify-content-center"><a href="/cart">Zobrazit košík</a></div>
+                    <div class="row" style="font-family: Urbanist;">
+                        <div class="col-6 text-sm-start bold">
+                            <h6 class="my-0 bold">CELKEM</h6>
+                        </div>
+                        <div class="col-6 text-sm-end bold">
+                            <small class="text-body-secondary bold" id="total_price">{{ cart.get_total_price_after_discount|floatformat:2 }}Kč</small>
+                        </div>
+                    </div>
+                    <div class="row mt-3 mb-3 justify-content-center"><a href="/orders/create" class="w-75 btn btn-md" style="border-radius: 1px; background-color: #FF9FE5; font-weight: 500; color:white" type="submit"  value="Place order">CHECKOUT</a></div>
+                    <div class="row mb-3 justify-content-center align-content-center"><a class="btn" style="text-decoration: underline; padding-bottom: 5px;" href="/cart">Zobrazit košík</a></div>
+                </div>
                 </div>
             </div>
        

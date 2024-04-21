@@ -52,8 +52,8 @@
                     <a href="{{ product.get_absolute_url }}">
                     <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" height="68px" width="49px"></a>
                     <span class="ms-3">
-                    <a href="{{ product.get_absolute_url }}" style="color: #2B50AA; font-family: Urbanist;">{{ product.name }}</span>
-                    </a>
+                    <a href="{{ product.get_absolute_url }}" style="color: #2B50AA; font-family: Urbanist;">{{ product.name }}</a></span>
+                    
                 </td>
                 <td class="justify-content-center align-content-center text-center"><span>{{ item.price }}Kč</span></td>
                 <td class="justify-content-center align-content-center text-center">
