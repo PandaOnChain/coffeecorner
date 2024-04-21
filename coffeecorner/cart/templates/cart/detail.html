@@ -134,7 +134,7 @@
         
 
 
-<section class="pt-3 pb-4 mb-lg-5" style="background-color: #ffd4d4;">
+<section class="pt-3 pb-4 mb-lg-5" style="background-color: rgba(255, 212, 212, 0.3);">
     <div class="container px-4 px-lg-5">
         {% if recommended_products %}
         <div class="pb-3">
@@ -143,7 +143,7 @@
         <div class="row">
             {% for p in recommended_products %}
             <div class="col-lg-3 col-md-6">
-                <div class="card mb-3 p-2 border-0" style="background-color: #ffd4d4;">
+                <div class="card mb-3 p-2 border-0" style="background-color: rgba(255, 212, 212, 0); ">
                 <a href="{{ p.get_absolute_url }}">
                     <img class="img-fluid" src="{% if p.image %}{{ p.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
                 </a>
@@ -171,7 +171,7 @@
                     </div>
                     <h5 class="card-title"  ><a style="color:#2B50AA; font-family: Urbanist; font-weight: bold; opacity: 90%;" href="{{ product.get_absolute_url }}">{{ p.name }}</a></h5>
                     <div style="font-family: Urbanist;" class="d-flex justify-content-between"><span>{{ p.price }}Kč </span>
-                        <button class="flex-shrink-0 border-0 pe-0" style="background-color: #ffd4d4; font-family: Urbanist;" type="submit">
+                        <button class="flex-shrink-0 border-0 pe-0" style="background-color: rgba(255, 212, 212, 0); font-family: Urbanist;" type="submit">
                                     Do košíku
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-handbag" viewBox="0 0 16 16" style="color: #2B50AA;">
                                     <path d="M8 1a2 2 0 0 1 2 2v2H6V3a2 2 0 0 1 2-2m3 4V3a3 3 0 1 0-6 0v2H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5zm-1 1v1.5a.5.5 0 0 0 1 0V6h1.639a.5.5 0 0 1 .494.426l1.028 6.851A1.5 1.5 0 0 1 12.678 15H3.322a1.5 1.5 0 0 1-1.483-1.723l1.028-6.851A.5.5 0 0 1 3.36 6H5v1.5a.5.5 0 1 0 1 0V6z"/>
