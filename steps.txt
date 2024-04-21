@@ -133,3 +133,9 @@ pip install redis
 >>> r.products_bought([red_tea, black_tea, tea_powder])
 
 >>> r.suggest_products_for([black_tea])
+
+
+python manage.py shell
+with open ('random_recommendations.py', mode='r', encoding='utf-8') as f:
+    code = f.read()
+exec(code)

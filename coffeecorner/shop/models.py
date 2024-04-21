@@ -30,8 +30,8 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    number_of_rating = models.IntegerField(max_length=2)
-    rating = models.IntegerField(max_length=1)
+    number_of_rating = models.IntegerField()
+    rating = models.IntegerField()
     pre_discount_price = models.DecimalField(max_digits=10, decimal_places=2)
     short_description = models.TextField(blank=True)
     class Meta:
