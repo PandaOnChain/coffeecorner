@@ -125,12 +125,11 @@
             </nav>
             
             <div class="offcanvas offcanvas-end" style="width: 333px;" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-                <div class="offcanvas-header">
-                    <button type="button" class="btn-close mt-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
+                
                 <div class="offcanvas-body">
+                    <div class="row justify-content-end align-content-end"><button type="button" class="btn-close mt-1 me-2" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
                     {% with total_items=cart|length %}
-                    <div class="container mt-0" style="font-family: Urbanist; ">
+                    <div class="container mt-2" style="font-family: Urbanist; ">
                     <h5 style="color:#2B50AA">VÁŠ KOŠÍK ({% if total_items > 0 %}{{ total_items }}{% elif not order %}0{% endif %}){% endwith %}</h5>
                     <p class="lead" style="font-size: small;">Doprava zdarma na všechny objednávky nad 500 Kč</p>
                     <hr>
