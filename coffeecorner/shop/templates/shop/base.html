@@ -52,7 +52,14 @@
                 background-color: black;
                 border: 0;
             }
-/*        
+            .offcanvas-bottom {
+            top: auto;
+            bottom: 0;
+            }
+            .offcanvas-backdrop {
+                display: none;  
+            }
+/*          
             .card:hover {
                 color: #9cc4b266;
                 transform: scale(1.025);
@@ -293,13 +300,52 @@
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                     <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.5 3.5 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.5 4.5 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683m6.991-8.38a.5.5 0 1 1 .448.894l-1.009.504c.176.27.285.64.285 1.049 0 .828-.448 1.5-1 1.5s-1-.672-1-1.5c0-.247.04-.48.11-.686a.502.502 0 0 1 .166-.761zm-6.552 0a.5.5 0 0 0-.448.894l1.009.504A1.94 1.94 0 0 0 5 6.5C5 7.328 5.448 8 6 8s1-.672 1-1.5c0-.247-.04-.48-.11-.686a.502.502 0 0 0-.166-.761z"/>
                 </svg>
-                    Не беси 
+                    Mimo provoz... 
                 </div>
             </div>
             </div>
             <div class="bd-example">
         </div>
 
+
+        <!-- <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="offcanvas offcanvas-bottom" style="height: 120px; background-color: rgba(255, 212, 212, 0.3);" data-bs-scroll="true" tabindex="-1" id="welcomeModal" aria-labelledby="offcanvasBottomLabel">
+            <div class="offcanvas-header">
+                <div class="col-10" ><h5 class="offcanvas-title" id="offcanvasBottomLabel" style="font-family: Urbanist; color: #2B50AA;">Cvičný studentský projekt realizovaný v rámci výuky na ČZU v Praze</h5></div>
+                
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small" style="font-family: Urbanist; color: #2B50AA;">
+                zdrojový kód můžete nalézt <a href="https://github.com/PandaOnChain/coffeecorner" style="color: #FF9FE5;">zde</a>
+            </div>
+        </div>
+
+        <script>    
+            $(document).ready(function() {
+                if (!localStorage.getItem('modalShown')) {
+                    var welcomeModal = new bootstrap.Offcanvas(document.getElementById('welcomeModal'));
+                    welcomeModal.show();
+
+                }
+            });
+        </script>
 
         <script>
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
